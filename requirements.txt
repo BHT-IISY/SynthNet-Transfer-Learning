@@ -1,0 +1,28 @@
+transformers
+datasets
+evaluate
+
+numpy==1.24 # numba needs numpy 1.24 or less
+numba
+scikit-learn
+pytorch-lightning       # pytorch lightning
+torchvision
+opencv-python
+faiss-gpu
+# --- config & logging ---
+wandb
+omegaconf
+hydra-core
+hydra-colorlog
+rich            # beautiful text formatting in terminal
+webcolors
+prettytable
+# --- other ---
+pyrootutils     # standardizing the project root setup
+pre-commit      # hooks for applying linters on commit
+black           # Python code formatter
+flake8          # python linter
+isort           # sort python imports
+
+# --- personal/optional ---
+# jupyter_contrib_nbextensions

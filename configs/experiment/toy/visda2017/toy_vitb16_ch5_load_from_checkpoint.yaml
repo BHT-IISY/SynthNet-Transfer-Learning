@@ -1,0 +1,54 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /data: generic_visda2017_toy.yaml
+  - override /model: vit.yaml
+  - override /callbacks: default_ch.yaml
+  - override /trainer: default.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+tags: ["toy", "visda2017", "vitb16", "SGD", "class head"]
+
+seed: 42
+
+trainer:
+  min_epochs: 5
+  max_epochs: 5 # Continue training for N epochs. (does NOT include pretrained epochs)
+
+model:
+  # Load model from checkpoint (weights only)
+  _target_: models.vit_module.VitModule.load_from_checkpoint
+  checkpoint_path: out/train/runs/toy/toy_vitb16_visda2017_lp20/2023-03-21_18-32-12/checkpoints/last.ckpt
+  verbose: true
+  optimizer:
+    _target_: torch.optim.SGD
+    lr: 0.1
+    momentum: 0.9
+  scheduler: null
+
+data:
+  toy: true
+  train_dir: ${paths.data_dir}visda2017/train
+  # val_dir: ${paths.data_dir}visda2017/val
+  test_dir: ${paths.data_dir}visda2017/test
+  batch_size: 4
+  num_workers: 4
+  random_horizontal_flip: true
+  random_vertical_flip: false
+  random_color_jitter: true
+  random_grayscale: true
+
+model_checkpoint:
+  save_weights_only: False
+
+logger:
+  wandb:
+    project: lightning_toy_runs
+    job_type: "class head continue"
+    name: ${hydra:runtime.choices.experiment}
+    tags: ${tags}

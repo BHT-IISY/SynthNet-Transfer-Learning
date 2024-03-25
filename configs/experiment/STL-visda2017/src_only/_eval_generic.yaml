@@ -1,0 +1,25 @@
+# @package _global_
+
+defaults:
+  - override /data: generic_visda2017.yaml
+  - override /model: vit.yaml
+  - override /trainer: default.yaml
+
+seed: 42
+
+model:
+  model_name: microsoft/swinv2-base-patch4-window12-192-22k
+
+logger:
+  wandb:
+    id: gcuksipk
+    project: STL-visda2017
+    # name: ${hydra:runtime.choices.experiment}
+    name: STL-visda2017/swinv2_ch_sgd1e-3
+    # tags: ${tags}
+
+ckpt_path: out/synthnet-transfer-learning-outputs/train/multiruns/STL-visda2017/swinv2_ch_sgd1e-3/2023-04-21_14-13-45/5/checkpoints/epoch_000.ckpt
+
+data:
+  image_size_h: 192
+  image_size_w: 192
